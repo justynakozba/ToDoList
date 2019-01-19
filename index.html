@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="ToDoList.js" defer></script>
+    <script src="RestAPIRequest.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Justyna Koźba - ToDoList</title>
+    <link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet">
+    <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+        <div id="myDIV" class="header">
+            <h2 style="border:10px">TO DO LIST</h2>
+            <input type="text" id="Title" placeholder="Title...">
+            <input type="text" id="Deadline" placeholder="Deadline... (YYYY-MM-DD)">
+            <span onclick="newElement()" class="btnAdd">Add</span>
+            <span onclick="deleteSelected()" class="btnDeleteSelected">Delete selected</span>
+            <span onclick="unselectAll()" class="btnSelect">Unselect all</span>
+            <span onclick="selectAll()" class="btnSelect">Select all</span>
+
+        </div>
+
+        <table>
+            <th>Content</th>
+            <th>Deadline</th>
+            <th>Check</th>
+            <th>Delete</th>
+        </table>
+        <ul id="myToDoList"></ul>
+</body>
+</html>

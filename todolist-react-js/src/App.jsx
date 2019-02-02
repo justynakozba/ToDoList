@@ -40,6 +40,7 @@ class App extends Component {
         axios.get(url + "?page=" + i).then(res => {
           res.data.notes.forEach(note => {
             this.state.notes.push(note);
+            console.log("status : " + note.completed);
             // Why I have to force change state here?
             this.setState({ state: this.state });
           });
@@ -57,7 +58,6 @@ class App extends Component {
   }
 
   addNoteToServer(taskName, deadline) {
-    console.log("Put task on server");
     axios
       .post(url, {
         note: {
@@ -70,42 +70,52 @@ class App extends Component {
         }
       })
       .then(res => {
-        console.log("this is response status " + res.statusText);
+        console.log(
+          "Adding task - " + taskName + " with result" + res.statusText
+        );
       });
   }
 
+  updateCompletionOnServer(noteId, completion) {
+    console.log("update on a server attempt" + url + noteId + "/" + completion);
+    axios.put(url + noteId + "/" + completion).then(res => {
+      console.log(
+        "Changing completion for note: " +
+          noteId +
+          "  end up with result" +
+          res.statusText
+      );
+    });
+  }
   handleSaveEvent() {
-    this.setState(
-      prevState => {
-        const editedNoteExist = prevState.notes.find(
-          nt => nt.id === prevState.note.id
-        );
+    this.setState(prevState => {
+      const editedNoteExist = prevState.notes.find(
+        nt => nt.id === prevState.note.id
+      );
 
-        let updatedNotes;
-        if (editedNoteExist) {
-          updatedNotes = prevState.notes.map(nt => {
-            if (nt.id === prevState.note.id) return prevState.note;
-            else return nt;
-          });
-        } else {
-          updatedNotes = [...prevState.notes, prevState.note];
-          this.addNoteToServer(prevState.note.content, prevState.note.deadline);
+      let updatedNotes;
+      if (editedNoteExist) {
+        updatedNotes = prevState.notes.map(nt => {
+          if (nt.id === prevState.note.id) return prevState.note;
+          else return nt;
+        });
+      } else {
+        updatedNotes = [...prevState.notes, prevState.note];
+        this.addNoteToServer(prevState.note.content, prevState.note.deadline);
+      }
+
+      return {
+        notes: updatedNotes,
+        note: {
+          id: 0,
+          content: "",
+          deadline: "",
+          completed: false,
+          created_at: "",
+          updated_at: ""
         }
-
-        return {
-          notes: updatedNotes,
-          note: {
-            id: 0,
-            content: "",
-            deadline: "",
-            completed: false,
-            created_at: "",
-            updated_at: ""
-          }
-        };
-      },
-      () => localStorage.setItem("notes", JSON.stringify(this.state.notes))
-    );
+      };
+    });
   }
 
   handleRemoveEvent(id) {
@@ -143,14 +153,19 @@ class App extends Component {
 
   handleCheckedEvent(id) {
     this.setState(prevState => {
-      const myNote = prevState.notes.find(nt => nt.id === id);
-
-      if (!myNote.completed) {
-        console.log("zaznaczono task " + myNote.completed);
-        myNote.completed = false;
-      } else {
-        console.log("odzaznaczono task " + myNote.completed);
-      }
+      prevState.notes.find(nt => {
+        if (nt.id === id) {
+          if (!nt.completed) {
+            nt.completed = true;
+            this.updateCompletionOnServer(nt.id, "completed");
+            console.log("ukonczono task " + nt.completed);
+          } else {
+            nt.completed = false;
+            this.updateCompletionOnServer(nt.id, "uncompleted");
+            console.log("nieukonczone task " + nt.completed);
+          }
+        }
+      });
     });
   }
 

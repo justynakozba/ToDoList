@@ -1,0 +1,34 @@
+.edit-event__input-group input {
+  border: 20 solid white;
+  border-radius: 10px;
+  padding: 12px 20px;
+  margin: 10px 20px 10px;
+  width: 80%;
+  display: flex;
+}
+
+.edit-event label {
+  color: #fff;
+  font-size: 1.2rem;
+  border-width: 50re;
+  margin: 5px 20px 10px;
+  padding: 5px;
+  display: flex;
+}
+
+.edit-event button {
+  background: transparent;
+  cursor: pointer;
+  border: solid 3px #fff;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1.4rm;
+  margin: 5px 70px 10px;
+  padding: 5px;
+  text-transform: uppercase;
+  width: 25%;
+}
+
+.edit-event button:disabled {
+  opacity: 0.4;
+}

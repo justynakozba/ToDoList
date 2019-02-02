@@ -40,25 +40,12 @@ class App extends Component {
         axios.get(url + "?page=" + i).then(res => {
           res.data.notes.forEach(note => {
             this.state.notes.push(note);
-          });
-          this.state.notes.forEach(note => {
-            console.log(
-              "moj note name: " +
-                note.content +
-                " moj id " +
-                note.id +
-                " data: " +
-                note.deadline
-            );
+            // Why I have to force change state here?
+            this.setState({ state: this.state });
           });
         });
       }
     });
-    const intervalId = setInterval(this.timer, 1000);
-    this.setState({ intervalId: intervalId });
-  }
-  componentWillUnmount() {
-    clearInterval(this.state.intervalId);
   }
 
   handleEditEvent(val) {
@@ -67,6 +54,24 @@ class App extends Component {
         note: Object.assign(prevState.note, val)
       };
     });
+  }
+
+  addNoteToServer(taskName, deadline) {
+    console.log("Put task on server");
+    axios
+      .post(url, {
+        note: {
+          id: 0, //Id is not respected anyway so was hardcoded to 0.
+          content: taskName,
+          deadline: deadline,
+          completed: false,
+          created_at: new Date().toLocaleDateString(),
+          updated_at: new Date().toLocaleDateString()
+        }
+      })
+      .then(res => {
+        console.log("this is response status " + res.statusText);
+      });
   }
 
   handleSaveEvent() {
@@ -84,6 +89,7 @@ class App extends Component {
           });
         } else {
           updatedNotes = [...prevState.notes, prevState.note];
+          this.addNoteToServer(prevState.note.content, prevState.note.deadline);
         }
 
         return {
@@ -100,23 +106,6 @@ class App extends Component {
       },
       () => localStorage.setItem("notes", JSON.stringify(this.state.notes))
     );
-
-    console.log("Put task on server");
-
-    axios
-      .post(url, {
-        note: {
-          id: 0, //Id is not respected anyway so was hardcoded to 0.
-          content: "taskName",
-          deadline: "2018-01-01",
-          completed: false,
-          created_at: new Date().toLocaleDateString(),
-          updated_at: new Date().toLocaleDateString()
-        }
-      })
-      .then(res => {
-        console.log("this is response status " + res.statusText);
-      });
   }
 
   handleRemoveEvent(id) {
@@ -152,8 +141,17 @@ class App extends Component {
     });
   }
 
-  handleCheckedEvent() {
-    console.log("zaznaczono task ");
+  handleCheckedEvent(id) {
+    this.setState(prevState => {
+      const myNote = prevState.notes.find(nt => nt.id === id);
+
+      if (!myNote.completed) {
+        console.log("zaznaczono task " + myNote.completed);
+        myNote.completed = false;
+      } else {
+        console.log("odzaznaczono task " + myNote.completed);
+      }
+    });
   }
 
   render() {
@@ -167,6 +165,7 @@ class App extends Component {
           deadline={nt.deadline}
           onRemove={id => this.handleRemoveEvent(id)}
           onEditInit={id => this.handleEditInit(id)}
+          onChecked={id => this.handleCheckedEvent(id)}
         />
       );
     });

@@ -4,9 +4,8 @@ import "./EditEvent.css";
 import { isValidString } from "./utils";
 
 const EditEvent = props => {
-  /* const isFormValid =
-    isValidString(props.name) && isValidString(props.deadline);*/
-  const isFormValid = true;
+  const isFormValid =
+    isValidString(props.name) && isValidString(props.deadline);
   const isFormEmpty = props.content === "" && props.deadline === "";
 
   return (

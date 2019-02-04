@@ -21,7 +21,7 @@ const EditEvent = props => {
             onChange={e =>
               props.onInputChange({ [e.target.name]: e.target.value })
             }
-            placeholder="Add task to do"
+            placeholder="Add task..."
           />
           <label htmlFor="content" />
         </div>
@@ -29,7 +29,6 @@ const EditEvent = props => {
           <input
             type="date"
             placeholder="icon-data"
-            data-date-inline-picker="true"
             id="deadline"
             name="deadline"
             value={props.deadline}
@@ -38,7 +37,7 @@ const EditEvent = props => {
               props.onInputChange({ [e.target.name]: e.target.value })
             }
           />
-          <label htmlFor="deadline">deadline</label>
+          <label htmlFor="deadline" />
         </div>
         <div>
           <button disabled={!isFormValid} onClick={() => props.onSave()}>

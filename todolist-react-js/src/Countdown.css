@@ -1,25 +1,23 @@
 .countdown {
-  background: linear-gradient(#a0b3c9, #c6d9f3);
+  background: linear-gradient(#0b8992, #8ce7ee);
   color: white;
   font-size: 1.8rem;
   padding: 25px;
+  border: 10px;
 }
 
 .countdown__icons {
   cursor: pointer;
   display: none;
   float: right;
-  font-size: 2rem;
-}
-
-.countdown:hover .countdown__icons {
+  font-size: 1.8rem;
+  margin-left: 60px;
   display: block;
 }
 
-.countdown:hover .overlay span {
-  display: block;
+.text {
+  float: right;
 }
-
 .checked {
   text-decoration: line-through;
   color: green;

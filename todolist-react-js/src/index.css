@@ -10,10 +10,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
 }
 
 .header {
-  background-image: url(images/mountain.jpg);
+  background-image: url(images/image2.jpg);
   background-repeat: no-repeat, repeat;
   background-color: #cccccc;
   padding: 20px 40px;

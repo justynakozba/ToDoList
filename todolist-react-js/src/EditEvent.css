@@ -3,7 +3,7 @@
   border-radius: 10px;
   padding: 12px 20px;
   margin: 10px 20px 10px;
-  width: 80%;
+  width: 85%;
   display: flex;
 }
 
@@ -11,7 +11,6 @@
   color: #fff;
   font-size: 1.2rem;
   border-width: 50re;
-  margin: 5px 20px 10px;
   padding: 5px;
   display: flex;
 }

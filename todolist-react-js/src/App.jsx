@@ -3,47 +3,51 @@ import "./App.css";
 import Countdown from "./Countdown";
 import EditEvent from "./EditEvent";
 import axios from "axios";
+import { join } from "path";
 
 const url = "http://useo-notes.herokuapp.com/notes/";
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      now: {
-        deadline: new Date().getDate() //zmienic na currenttime
-      },
-      totalPages: -1,
+  //constructor() {
+  //super();
+  state = {
+    now: {
+      deadline: new Date().getDate() //zmienic na currenttime
+    },
+    totalPages: -1,
 
-      notes: [],
-      note: {
-        id: -1,
-        content: "",
-        completed: false,
-        deadline: "",
-        created_at: "",
-        updated_at: ""
-      }
-    };
+    notes: [],
+    note: {
+      id: -1,
+      content: "",
+      completed: false,
+      deadline: "",
+      created_at: "",
+      updated_at: ""
+    }
+  };
 
-    this.handleEditEvent = this.handleEditEvent.bind(this);
-    this.handleSaveEvent = this.handleSaveEvent.bind(this);
-    this.handleRemoveEvent = this.handleRemoveEvent.bind(this);
-    this.handleEditInit = this.handleEditInit.bind(this);
-    this.handleEditCancel = this.handleEditCancel.bind(this);
-  }
+  //this.handleEditEvent = this.handleEditEvent.bind(this);
+  //this.handleSaveEvent = this.handleSaveEvent.bind(this);
+  //this.handleRemoveEvent = this.handleRemoveEvent.bind(this);
+  //this.handleEditInit = this.handleEditInit.bind(this);
+  //this.handleEditCancel = this.handleEditCancel.bind(this);
+  //}
 
   componentDidMount() {
     axios.get(url).then(res => {
       this.setState({ totalPages: res.data.total_pages });
       console.log(" in axios " + res.data.total_pages);
+      const array = [];
       for (let i = 1; i <= res.data.total_pages; i++) {
         axios.get(url + "?page=" + i).then(res => {
           res.data.notes.forEach(note => {
-            this.state.notes.push(note);
+            //this.state.notes.push(note);
             console.log("status : " + note.completed);
             // Why I have to force change state here?
-            this.setState({ state: this.state });
+            //this.setState({ state: this.state });
+            array.push(note);
           });
+          this.setState({ notes: array });
         });
       }
     });
@@ -168,7 +172,6 @@ class App extends Component {
       });
     });
   }
-
   render() {
     console.log("this is my render function !");
     const n = this.state.notes.map(nt => {

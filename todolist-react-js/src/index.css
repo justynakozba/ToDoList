@@ -1,6 +1,7 @@
 html,
 body {
   height: 100%;
+  background-color: rgb(202, 238, 245);
 }
 body {
   margin: 0;
@@ -10,17 +11,18 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  display: flex;
 }
 
 .header {
   background-image: url(images/image2.jpg);
   background-repeat: no-repeat, repeat;
   background-color: #cccccc;
-  padding: 20px 40px;
   color: white;
   text-align: center;
+  max-width: 700px;
   width: auto;
+  margin: auto;
+  border: 5px groove rgb(118, 217, 241);
 }
 
 code {

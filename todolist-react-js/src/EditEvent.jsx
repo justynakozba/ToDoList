@@ -28,7 +28,7 @@ const EditEvent = props => {
         <div className="edit-event__input-group">
           <input
             type="date"
-            placeholder="icon-data"
+            placeholder="Deadline..."
             id="deadline"
             name="deadline"
             value={props.deadline}

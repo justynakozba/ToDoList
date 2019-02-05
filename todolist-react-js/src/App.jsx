@@ -3,7 +3,6 @@ import "./App.css";
 import Countdown from "./Countdown";
 import EditEvent from "./EditEvent";
 import axios from "axios";
-import { join } from "path";
 
 const url = "http://useo-notes.herokuapp.com/notes/";
 class App extends Component {
@@ -91,6 +90,7 @@ class App extends Component {
       );
     });
   }
+
   handleSaveEvent() {
     this.setState(prevState => {
       const editedNoteExist = prevState.notes.find(
@@ -162,16 +162,18 @@ class App extends Component {
           if (!nt.completed) {
             nt.completed = true;
             this.updateCompletionOnServer(nt.id, "completed");
-            console.log("ukonczono task " + nt.completed);
+            console.log("ukonczono task " + nt.completed + " class name ");
           } else {
             nt.completed = false;
             this.updateCompletionOnServer(nt.id, "uncompleted");
-            console.log("nieukonczone task " + nt.completed);
+            console.log("nieukonczony task " + nt.completed);
           }
         }
       });
     });
+    this.setState({ state: this.state });
   }
+
   render() {
     console.log("this is my render function !");
     const n = this.state.notes.map(nt => {
@@ -181,6 +183,7 @@ class App extends Component {
           id={nt.id}
           content={nt.content}
           deadline={nt.deadline}
+          completion={nt.completed}
           onRemove={id => this.handleRemoveEvent(id)}
           onEditInit={id => this.handleEditInit(id)}
           onChecked={id => this.handleCheckedEvent(id)}

@@ -1,11 +1,10 @@
 #root,
 .app {
   height: 100%;
+  background-color: rgb(202, 238, 245);
 }
 
 .app {
-  background: #c6d9f3;
-  width: 700px;
+  width: auto;
   margin: 0 auto;
-  order: -1;
 }
